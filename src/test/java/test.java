@@ -7,77 +7,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import org.junit.*;
 import org.openqa.selenium.By;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.*;
-import java.util.Random;
-import java.io.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
 public class test {
     public static boolean added=false;
     @BeforeClass public static void Intialization()
     {
-        String searchby="";//element to search by after uplading
-
-        //creating random values in Excel sheet
-        try {
-
-            Random random = new Random();
-            int randomNumber ;
-            String randomstr;
-
-            //Set the number of rows to be Added
-            int row_number=10;//Set the number of rows to be Added
-
-            //initialization
-            String filePath = "C:\\Users\\Mohamed Elbialy\\IdeaProjects\\Importaion Market Providor Products\\src\\main\\resources\\19-10.xlsx";//file path
-            FileInputStream fis = new FileInputStream(new File(filePath));
-            Workbook workbook = new XSSFWorkbook(fis);
-            XSSFSheet sheet = (XSSFSheet) workbook.getSheet("products"); // Change to the appropriate sheet name or index
-            //initialization
-
-
-
-            for(int i=1;i<=row_number;i++)//looping on each row  limted by row_number
-            {
-                int rowIndex = i;
-                randomNumber = random.nextInt(90000) + 10000;
-                randomstr=String.valueOf(randomNumber);//random string
-
-                // Specify the data to add
-                String dataToAdd = "Imporation_Test_"+randomstr;
-
-                if(i==1){searchby=dataToAdd;}//set data to search by
-
-                // Get the row at the specified index
-                Row row = sheet.getRow(rowIndex);
-                if (row == null) {
-                    row = sheet.createRow(rowIndex);
-                }
-
-                Cell cellmoney=row.createCell(3);//money column
-                cellmoney.setCellValue("100");//set money
-
-                Cell cellsku=row.createCell(0);//Sku coulumn
-                cellsku.setCellValue(randomstr+randomstr);//set SKU
-
-                for(int j =1;j<=2;j++)//looping in each column to set data in the row
-                {
-                    Cell cell = row.createCell(j);
-                    cell.setCellValue(dataToAdd);
-
-                }
-            }
-            try (FileOutputStream fos = new FileOutputStream(filePath)) {
-                workbook.write(fos);
-            }
-
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-        //creating random values in Excel sheet
+        //adding elements to excel sheet
+        MaketImportation_Excel m1=new MaketImportation_Excel();
+        String searchby= m1.Modify_Excel(10,"C:\\Users\\Mohamed Elbialy\\IdeaProjects\\Importaion Market Providor Products\\src\\main\\resources\\19-10.xlsx");//element to search by after uplading
+        //adding elements to excel sheet
+        System.out.println(searchby);
 
 
         // Importing EXCEL SHEEET
